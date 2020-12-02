@@ -14,7 +14,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_profile.*
 import java.io.File
@@ -43,20 +42,18 @@ class ProfileActivity : AppCompatActivity() {
             ActivityCompat.requestPermissions(
                 this,
                 permissions.toTypedArray(),
-                PERMISSION_REQUEST_CODE
-            )
+                PERMISSION_REQUEST_CODE)
         }
         checkPermissions(this)
 
         userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
         userViewModel.username.observe(this, {
-            println("???name??? $it")
+            tv_username.text = it
         })
 
         intent.getStringExtra("name")?.let { n ->
             userViewModel.setUsername(n)
-            tv_username.text = n
         }
 
         iv_user.setOnClickListener {
